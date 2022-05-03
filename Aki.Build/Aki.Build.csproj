@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+	  <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Aki.ByteBanger\Aki.ByteBanger.csproj" />
+    <ProjectReference Include="..\Aki.Launcher.Base\Aki.Launcher.Base.csproj" />
+    <ProjectReference Include="..\Aki.Launcher.CLI\Aki.Launcher.CLI.csproj" />
+    <ProjectReference Include="..\Aki.Launcher\Aki.Launcher.csproj" />
+  </ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(BuildingInsideVisualStudio)' == 'true'">
+		<Exec Command="dotnet cake &quot;../build.cake&quot; --config=&quot;$(ConfigurationName)&quot; --vsbuilt=true" />
+	</Target>
+
+</Project>

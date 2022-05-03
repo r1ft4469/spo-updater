@@ -1,0 +1,141 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:helpers="using:Aki.Launcher.Helpers"
+			 xmlns:launcher="using:Aki.Launcher.Models.Launcher"
+			 xmlns:cvt="using:Aki.Launcher.Converters"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Aki.Launcher.Views.LoginView">
+
+	<UserControl.Resources>
+		<cvt:ImageSourceConverter x:Key="imageSourceCvt"/>
+	</UserControl.Resources>
+
+	<Grid RowDefinitions="20,*,AUTO,*,20" ColumnDefinitions="20,4*,2*,20">
+
+		<ScrollViewer Grid.Row="1" Grid.RowSpan="3" Grid.Column="1">
+			<ItemsControl Items="{Binding ExistingProfiles}"
+						  VerticalAlignment="Center" HorizontalAlignment="Stretch"
+					  >
+				<ItemsControl.ItemTemplate>
+					<DataTemplate DataType="launcher:ProfileInfo">
+						<Button Classes="profileinfo" Margin="0 10 10 10" HorizontalAlignment="Stretch"
+								Command="{Binding $parent[ItemsControl].DataContext.LoginProfileCommand}"
+								CommandParameter="{Binding Username}"
+								>
+							<Grid RowDefinitions="5,AUTO,AUTO,5" ColumnDefinitions="5,AUTO,AUTO,AUTO,*,AUTO,5">
+								<Image Source="{Binding SideImage, Converter={StaticResource imageSourceCvt}}" Height="35"
+									   Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Margin="0 0 5 0"
+								   />
+
+								<!-- username -->
+								<Label Content="{Binding Username}" Grid.Row="1" Grid.Column="2"
+								   />
+
+								<!-- aki version -->
+								<Label x:Name="akiVersion"
+									   Grid.Row="1" Grid.Column="4"
+									   Background="Transparent"
+									   ToolTip.Tip="{Binding MismatchMessage}"
+									   Classes.versionMismatch="{Binding VersionMismatch}"
+									   >
+									<StackPanel Orientation="Horizontal"> 
+										<TextBlock Text="{Binding Aki.version}"/>
+										<Path Data="{StaticResource Alert}" Fill="{Binding ElementName=akiVersion, Path=Foreground}"
+											  Margin="10 0"
+											  IsVisible="{Binding VersionMismatch}"
+											  />
+									</StackPanel>
+								</Label>
+
+								<!-- no data label -->
+								<Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+								   Path=no_profile_data}"
+									   Grid.Row="1" Grid.RowSpan="2" Grid.Column="5"
+									   HorizontalAlignment="Center"
+									   VerticalAlignment="Center"
+									   FontWeight="SemiBold"
+									   Foreground="{StaticResource AKI_Brush_DarkGrayBlue}"
+									   IsVisible="{Binding !HasData}"
+								   />
+
+								<!-- nickname -->
+								<Label Content="{Binding Nickname}" Grid.Row="1" Grid.Column="3"
+									   IsVisible="{Binding HasData}"
+									   Foreground="{StaticResource AKI_Brush_DarkGrayBlue}"
+								   />
+
+								<!-- next leve in text -->
+								<Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=next_level_in}"
+									   Grid.Row="1" Grid.Column="4"
+									   HorizontalAlignment="Right"
+									   IsVisible="{Binding HasData}"
+								   />
+
+								<!-- remaining exp -->
+								<Label Content="{Binding RemainingExp, StringFormat={}{0} xp}" Grid.Row="1" Grid.Column="5"
+									   IsVisible="{Binding HasData}"
+								   />
+
+								<!-- level text-->
+								<Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=level}"
+									   Grid.Row="2" Grid.Column="2"
+									   IsVisible="{Binding HasData}"
+								   />
+
+								<!-- level -->
+								<Label Content="{Binding Level}" Grid.Row="2" Grid.Column="3"
+									   IsVisible="{Binding HasData}"
+								   />
+
+								<!-- exp level progress -->
+								<ProgressBar Value="{Binding XPLevelProgress}"
+											 Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2"
+											 IsVisible="{Binding HasData}"
+										 />
+							</Grid>
+						</Button>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</ScrollViewer>
+
+		<!-- Login Control backdrop -->
+		<Border CornerRadius="5"
+				Grid.Row="2" Grid.Column="2"
+				BorderBrush="{StaticResource AKI_Background_Dark}"
+				BorderThickness="2"
+				Background="{StaticResource AKI_Background_Dark}"
+            >
+			<Rectangle Fill="{StaticResource AKI_Background_Dark}" />
+		</Border>
+
+		<StackPanel Spacing="10" Margin="10" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch">
+
+			<!-- Username box -->
+			<TextBox Watermark="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=username}"
+					   Text="{Binding Login.Username}"
+               />
+
+			<!-- Login button -->
+			<Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=login}"
+					HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+					Command="{Binding LoginCommand}"
+					IsEnabled="{Binding !IsLoggingIn}"
+					IsDefault="True"
+                />
+			<CheckBox Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=login_automatically}"
+					  IsChecked="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance}, Path=UseAutoLogin}"/>
+		</StackPanel>
+
+		<Button Content="Update SPO"
+            Grid.Row="3"
+			Grid.Column="2"
+            Margin="10"
+            HorizontalAlignment="Stretch"
+            IsVisible="{Binding connectModel.ConnectionFailed}"
+            Command="{Binding UpdateCommand}"
+            />
+	</Grid>
+</UserControl>

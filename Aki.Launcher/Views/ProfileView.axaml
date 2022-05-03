@@ -1,0 +1,111 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:helpers="using:Aki.Launcher.Helpers"
+             xmlns:cvt="using:Aki.Launcher.Converters"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Aki.Launcher.Views.ProfileView">
+  
+  <UserControl.Resources>
+    <cvt:ImageSourceConverter x:Key="imageSourceCvt"/>
+  </UserControl.Resources>
+
+  <Grid RowDefinitions="10,AUTO,*,AUTO,10" ColumnDefinitions="10,AUTO,*,10">
+
+    <!-- profile info -->
+    <Border Grid.Row="1" Grid.Column="1" CornerRadius="5"
+            BorderBrush="{StaticResource AKI_Background_Dark}"
+            BorderThickness="5">
+		<Grid RowDefinitions="10,AUTO,AUTO,AUTO,10" ColumnDefinitions="10,AUTO,*,10"
+			  Background="{StaticResource AKI_Background_Dark}"
+			  >
+			<StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+				<Label Content="{Binding CurrentUsername}" Margin="5 0"/>
+
+				<!--Grid.Row="1" Grid.Column="4"-->
+				<Label x:Name="akiVersion"
+					   Background="Transparent"
+					   ToolTip.Tip="{Binding ProfileInfo.MismatchMessage}"
+					   Classes.versionMismatch="{Binding ProfileInfo.VersionMismatch}"
+									   >
+					<StackPanel Orientation="Horizontal" Background="Transparent">
+						<TextBlock Text="{Binding ProfileInfo.Aki.version}"/>
+						<Path Data="{StaticResource Alert}" Fill="{Binding ElementName=akiVersion, Path=Foreground}"
+							  Margin="10 0"
+							  IsVisible="{Binding ProfileInfo.VersionMismatch}"
+		                    />
+					</StackPanel>
+				</Label>
+			</StackPanel>
+			
+			<Button HorizontalAlignment="Right" Grid.Row="1" Grid.Column="2"
+					Classes="icon"
+					Command="{Binding RemoveProfileCommand}"
+					>
+				<Path Data="{StaticResource Delete}" Fill="IndianRed"/>
+			</Button>
+			<Button Content="{Binding CurrentID}" Classes="link"
+					Grid.Row="2" Grid.Column="1"
+					Command="{Binding CopyCommand}"
+					CommandParameter="{Binding CurrentID}"/>
+			<Button Content="{Binding CurrentEdition}" Classes="link"
+					Grid.Row="3" Grid.Column="1"
+					Command="{Binding ChangeEditionCommand}"/>
+		</Grid>
+    </Border>
+
+    <!-- Bottom bar -->
+    <Border Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" CornerRadius="5"
+            BorderBrush="{StaticResource AKI_Background_Dark}"
+            BorderThickness="5"
+            >
+      <DockPanel Background="{StaticResource AKI_Background_Dark}">
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Stretch"
+                    Spacing="10"
+                    IsVisible="{Binding ProfileInfo.HasData}"
+                >
+            <Grid RowDefinitions="AUTO,AUTO" ColumnDefinitions="AUTO,AUTO">
+              <Image Source="{Binding SideImage.Path, Converter={StaticResource imageSourceCvt}}"
+                     Grid.RowSpan="2" Height="40" Margin="10 0"/>
+              <Label Content="{Binding ProfileInfo.Nickname}" Grid.Row="0" Grid.Column="2"/>
+              <Label Content="{Binding ProfileInfo.Side}" Grid.Row="1" Grid.Column="2"/>
+            </Grid>
+          <Label Content="{Binding ProfileInfo.Level}" VerticalAlignment="Center"
+                 FontSize="22"/>
+          <ProgressBar Value="{Binding ProfileInfo.XPLevelProgress}"/>
+          <StackPanel>
+            <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=next_level_in}" 
+                   HorizontalAlignment="Center"
+                   />
+            <Label Content="{Binding ProfileInfo.RemainingExp, StringFormat={}{0} xp}" 
+                   HorizontalAlignment="Center"
+                   />
+          </StackPanel>
+        </StackPanel>
+
+
+        <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=start_game}"
+                HorizontalAlignment="Right"
+                VerticalContentAlignment="Center"
+                VerticalAlignment="Stretch"
+                DockPanel.Dock="Right"
+                Command="{Binding StartGameCommand}"
+                IsEnabled="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance}, Path=!GameRunning}"
+                Classes="yellow"
+                />
+        
+        <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=logout}"
+                  Command="{Binding LogoutCommand}"
+                  Margin="10 0"
+                  Classes="link"
+                  DockPanel.Dock="Right"
+                  HorizontalAlignment="Right"
+                  />
+        
+      </DockPanel>
+    </Border>
+  </Grid>
+</UserControl>

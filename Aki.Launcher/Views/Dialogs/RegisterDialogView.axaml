@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dialogHost="clr-namespace:DialogHost;assembly=DialogHost.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Aki.Launcher.Views.Dialogs.RegisterDialogView"
+             Background="{StaticResource AKI_Background_Dark}"
+             MinWidth="300"
+             MinHeight="100"
+             >
+
+  <Grid RowDefinitions="*,AUTO,AUTO" ColumnDefinitions="*,AUTO" Margin="10">
+    <TextBlock Text="{Binding Question}" Grid.ColumnSpan="2" FontSize="15"
+               Foreground="{StaticResource AKI_Foreground_Light}"
+               />
+    
+    <ComboBox Items="{Binding Editions.AvailableEditions}"
+              Margin="0 10"
+              Grid.Row="1" Grid.ColumnSpan="2"
+              HorizontalAlignment="Stretch"
+              SelectedItem="{Binding Editions.SelectedEdition}"
+              PlaceholderText="{Binding ComboBoxPlaceholderText}"
+              />
+    
+    <StackPanel Grid.Row="2" Grid.Column="1"
+                Orientation="Horizontal" Spacing="10"
+                >
+      <Button Content="{Binding RegisterButtonText}"
+              Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost}, Path=CloseDialogCommand}"
+              CommandParameter="{Binding Editions.SelectedEdition}"
+              IsEnabled="{Binding Editions.HasSelection}"
+              IsDefault="True"
+              Classes="yellow"
+              />
+      <Button Content="{Binding CancelButtonText}"
+              Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost}, Path=CloseDialogCommand}"
+              />
+    </StackPanel>
+    
+  </Grid>
+  
+</UserControl>

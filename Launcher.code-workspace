@@ -1,0 +1,30 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"tasks":{
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "build",
+				"type": "shell",
+				"command": "dotnet cake",
+				"group": {
+					"kind": "build",
+					"isDefault": true
+				}
+			}
+		]
+	},
+	"extensions": {
+		"recommendations": [
+			"mhutchie.git-graph"
+		]
+	},
+	"settings": {
+		"window.title": "SPT-AKI Launcher",
+		"git-graph.commitDetailsView.location": "Docked to Bottom",
+	}
+}

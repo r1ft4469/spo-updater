@@ -1,0 +1,100 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:helpers="using:Aki.Launcher.Helpers"
+             xmlns:ext="using:Aki.Launcher.Extensions"
+             xmlns:model="using:Aki.Launcher.Models.Launcher"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Aki.Launcher.Views.SettingsView">
+  <Grid RowDefinitions="10,AUTO,AUTO,AUTO,*,10" ColumnDefinitions="10,2*,2*,10">
+
+    <!-- Backdrop -->
+    <Rectangle Fill="{StaticResource AKI_Background_Dark}"
+               Grid.RowSpan="6" Grid.ColumnSpan="4"
+               Opacity=".7"
+               />
+
+    <StackPanel Spacing="10" Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+      <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=remove_registry_keys}"
+              Command="{Binding RemoveRegistryKeysCommand}"
+              Classes="borderedlink"
+              />
+      <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=clear_game_settings}"
+              Command="{Binding ClearGameSettingsCommand}"
+              Classes="borderedlink"
+              />
+      <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=clean_temp_files}"
+              Command="{Binding CleanTempFilesCommand}"
+              Classes="borderedlink"
+              />
+    </StackPanel>
+    
+    <!-- Go Back -->
+    <Button Content="&#x279C;" FontSize="25"
+            Grid.Row="1" Grid.ColumnSpan="3"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Command="{Binding GoBackCommand}"
+            Classes="link"
+            />
+    
+    <!-- Default locale -->
+    <StackPanel Grid.Row="2" Grid.Column="1">
+      <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=default_language}"
+             />
+      <!-- LocaleCollection reloads the locale from file when the selected loacle changes -->
+      <ComboBox Items="{Binding Locales.AvailableLocales}" MinWidth="200"
+                SelectedItem="{Binding Locales.SelectedLocale, Mode=TwoWay, }"
+                />
+    </StackPanel>
+
+    <!-- Game Start Action -->
+    <StackPanel Grid.Row="2" Grid.Column="2">
+      <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=on_game_start}"
+             />
+      <ComboBox Items="{Binding Source={ext:EnumBindingSource {x:Type model:LauncherAction}}}" MinWidth="200"
+                SelectedItem="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance}, Path=LauncherStartGameAction}"
+                />
+    </StackPanel>
+
+    <!-- Game Path -->
+    <StackPanel Grid.Row="3" Grid.Column="1" Margin="0 10 10 10">
+      <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=game_path}"/>
+      <TextBox Watermark="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=game_path}"
+               Text="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance}, Path=GamePath}"
+               />
+    </StackPanel>
+      
+    <StackPanel Orientation="Horizontal" Spacing="3" Grid.Row="3" Grid.Column="2" Margin="0 20 0 0">
+      <!-- Select Folder -->
+      <Button  x:Name="sfb" Command="{Binding SelectGameFolderCommand}">
+        <StackPanel Orientation="Horizontal" Spacing="5">
+          <Path Data="{StaticResource FolderWithPlus}" Fill="{Binding ElementName=sfb, Path=Foreground}"
+            />
+          <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=select_folder}"/>
+        </StackPanel>
+      </Button>
+
+      <!-- Open Folder -->
+      <Button x:Name="ofb" Command="{Binding OpenGameFolderCommand}">
+        <StackPanel Orientation="Horizontal" Spacing="5">
+          <!-- This geometry data isn't centered and I'm far too lazy to fix it, so I'm just adding a margin (waffle.lazy) -->
+          <Path Data="{StaticResource OpenFolder}" Fill="{Binding ElementName=ofb, Path=Foreground}"
+                Margin="0 4 0 0"
+            />
+          <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=open_folder}"/>
+        </StackPanel>
+      </Button>
+    </StackPanel>
+
+    <!-- Server URL -->
+    <StackPanel Grid.Row="4" Grid.Column="1">
+      <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=url}"/>
+      <TextBox Watermark="{Binding Source={x:Static helpers:LocalizationProvider.Instance}, Path=url}"
+               Text="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance}, Path=Server.Url}"
+               />
+    </StackPanel>
+    
+  </Grid>
+</UserControl>
