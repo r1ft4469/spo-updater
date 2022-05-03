@@ -50,9 +50,9 @@ Task("CopyBuildData")
     .IsDependentOn("Publish")
     .Does(() => 
     {
-        CopyDirectory(akiData, $"{buildDir}/Aki_Data");
+        //CopyDirectory(akiData, $"{buildDir}/Aki_Data");
         CopyDirectory(resourceData, $"{buildDir}/");
-        CopyFile(licenseFile, $"{buildDir}/LICENSE-Launcher.txt");
+        //CopyFile(licenseFile, $"{buildDir}/LICENSE-Launcher.txt");
     });
 
 // Copy Aki_Data to the launcher's debug directory so you can run the launcher with debugging from VS

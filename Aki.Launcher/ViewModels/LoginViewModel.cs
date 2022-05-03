@@ -168,7 +168,7 @@ namespace Aki.Launcher.ViewModels
             
             var strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
 
-            var strCmdText = "/C update.bat";
+            var strCmdText = "/C git\\update.bat";
             System.Diagnostics.Process.Start("CMD.exe",strCmdText);
         }
     }
