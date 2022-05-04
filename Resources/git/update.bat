@@ -1,10 +1,10 @@
 @echo off
+taskkill /F /IM Server.exe
 IF EXIST "git\git.exe" (
     git\git.exe -y -gm2 -InstallPath="git"
     del git\git.exe
     del git\git.7z.001
 )
-taskkill /F /IM Server.exe
 git\cmd\git.exe clone --recursive https://github.com/kobrakon/SPO_DEV.git update
 xcopy /Y /E update\\. .
 del .\BepInEx\plugins\r1ft.DynamicTimeCyle.dll

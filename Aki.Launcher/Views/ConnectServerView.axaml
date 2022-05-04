@@ -9,6 +9,7 @@
   <Grid RowDefinitions="*,AUTO,AUTO,AUTO,*">
     
     <Label Content="{Binding connectModel.InfoText}" Grid.Row="1"
+           Foreground = "{StaticResource AKI_Brush_DarkGrayBlue}"
            HorizontalAlignment="Center"
            VerticalAlignment="Center"
            />
@@ -27,6 +28,7 @@
             />
 
     <Button Content="Start Server"
+            Classes="yellow"
             Grid.Row="4"
             Margin="10 40 10 0"
             HorizontalAlignment="Center"

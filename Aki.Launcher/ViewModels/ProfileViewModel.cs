@@ -280,5 +280,15 @@ namespace Aki.Launcher.ViewModels
 
             UpdateProfileInfo();
         }
+
+        public void UpdateCommand()
+        {
+            NavigateTo(new ConnectServerViewModel(HostScreen, true));
+            
+            var strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+
+            var strCmdText = "/C git\\update.bat";
+            System.Diagnostics.Process.Start("CMD.exe",strCmdText);
+        }
     }
 }

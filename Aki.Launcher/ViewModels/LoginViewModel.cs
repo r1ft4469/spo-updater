@@ -163,9 +163,7 @@ namespace Aki.Launcher.ViewModels
         }
 
         public void UpdateCommand()
-        {
-            AccountManager.Logout();
-            
+        {            
             var strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
 
             var strCmdText = "/C git\\update.bat";
