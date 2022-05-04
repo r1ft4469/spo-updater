@@ -26,7 +26,7 @@
             Command="{Binding RetryCommand}"
             />
 
-    <Button Content="Update SPO"
+    <Button Content="Start Server"
             Grid.Row="4"
             Margin="10 40 10 0"
             HorizontalAlignment="Center"
