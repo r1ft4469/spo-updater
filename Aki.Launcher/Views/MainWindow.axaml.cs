@@ -14,7 +14,7 @@ namespace Aki.Launcher.Views
         {
             InitializeComponent();
 #if DEBUG
-            this.AttachDevTools();
+            //this.AttachDevTools();
 #endif
 
             WindowNotificationManager notificationManager = new WindowNotificationManager(this);

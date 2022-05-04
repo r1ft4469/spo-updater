@@ -132,7 +132,7 @@
 		<Button Content="Update SPO"
             Grid.Row="3"
 			Grid.Column="2"
-            Margin="10"
+            Margin="10 40 10 0"
             HorizontalAlignment="Stretch"
             IsVisible="{Binding connectModel.ConnectionFailed}"
             Command="{Binding UpdateCommand}"

@@ -14,7 +14,8 @@
 				"group": {
 					"kind": "build",
 					"isDefault": true
-				}
+				},
+				"problemMatcher": []
 			}
 		]
 	},
@@ -26,5 +27,6 @@
 	"settings": {
 		"window.title": "SPT-AKI Launcher",
 		"git-graph.commitDetailsView.location": "Docked to Bottom",
+		"git.ignoreLimitWarning": true,
 	}
 }

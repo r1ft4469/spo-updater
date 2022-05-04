@@ -33,7 +33,7 @@
 
 	<Grid RowDefinitions="AUTO,AUTO,*">
 
-		<cc:TitleBar Title="SPT Launcher"
+		<cc:TitleBar Title="SPO Launcher"
 				     XButtonCommand="{Binding CloseCommand}"
 					 MinButtonCommand="{Binding MinimizeCommand}"
 					 SettingsButtonCommand="{Binding GoToSettingsCommand}"
