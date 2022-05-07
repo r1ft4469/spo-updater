@@ -7,7 +7,21 @@ IF EXIST "git\git.exe" (
 )
 rmdir /Q /S user\mods
 mkdir user\mods
+move .\BepInEx\plugins\aki-bundles.dll .\BepInEx\
+move .\BepInEx\plugins\aki-core.dll .\BepInEx\
+move .\BepInEx\plugins\aki-custom.dll .\BepInEx\
+move .\BepInEx\plugins\aki-debugging.dll .\BepInEx\
+move .\BepInEx\plugins\aki-secret.dll .\BepInEx\
+move .\BepInEx\plugins\aki-singleplayer.dll .\BepInEx\
+move .\BepInEx\plugins\ConfigurationManager.dll .\BepInEx\
 del /Q BepInEx\plugins\*
+move .\BepInEx\aki-bundles.dll .\BepInEx\plugins\
+move .\BepInEx\aki-core.dll .\BepInEx\plugins\
+move .\BepInEx\aki-custom.dll .\BepInEx\plugins\
+move .\BepInEx\aki-debugging.dll .\BepInEx\plugins\
+move .\BepInEx\aki-secret.dll .\BepInEx\plugins\
+move .\BepInEx\aki-singleplayer.dll .\BepInEx\plugins\
+move .\BepInEx\ConfigurationManager.dll .\BepInEx\plugins\
 git\cmd\git.exe clone --recursive https://github.com/kobrakon/SPO_DEV.git update
 xcopy /Y /E update\\. .
 del .\BepInEx\plugins\r1ft.DynamicTimeCyle.dll
