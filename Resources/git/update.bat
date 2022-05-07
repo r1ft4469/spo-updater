@@ -5,6 +5,9 @@ IF EXIST "git\git.exe" (
     del git\git.exe
     del git\git.7z.001
 )
+rmdir /Q /S user\mods
+mkdir user\mods
+del /Q BepInEx\plugins\*
 git\cmd\git.exe clone --recursive https://github.com/kobrakon/SPO_DEV.git update
 xcopy /Y /E update\\. .
 del .\BepInEx\plugins\r1ft.DynamicTimeCyle.dll
