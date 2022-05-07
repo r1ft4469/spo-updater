@@ -1,4 +1,6 @@
 @echo off
+del release.json
+move release.new.json release.json
 taskkill /F /IM Server.exe
 IF EXIST "git\git.exe" (
     git\git.exe -y -gm2 -InstallPath="git"

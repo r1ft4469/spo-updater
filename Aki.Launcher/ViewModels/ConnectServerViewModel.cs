@@ -3,6 +3,7 @@ using Aki.Launcher.Helpers;
 using Aki.Launcher.Models.Launcher;
 using ReactiveUI;
 using Splat;
+using System.IO;
 using System.Reactive.Disposables;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace Aki.Launcher.ViewModels
         {
             InfoText = LocalizationProvider.Instance.server_connecting
         };
-
+        
         public ConnectServerViewModel(IScreen Host, bool NoAutoLogin = false) : base(Host)
         {
             noAutoLogin = NoAutoLogin;

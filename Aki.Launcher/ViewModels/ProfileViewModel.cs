@@ -13,6 +13,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using System.Threading;
 
 namespace Aki.Launcher.ViewModels
 {
@@ -87,6 +89,12 @@ namespace Aki.Launcher.ViewModels
                     await ShowDialog(warning);
                 });
             }
+
+            
+            Dispatcher.UIThread.InvokeAsync(async () =>
+            {
+                UpdateStatus();
+            });
         }
 
         public void LogoutCommand()
@@ -289,6 +297,43 @@ namespace Aki.Launcher.ViewModels
 
             var strCmdText = "/C git\\update.bat";
             System.Diagnostics.Process.Start("CMD.exe",strCmdText);
+        }
+
+        private async Task UpdateStatus()
+        {
+            var strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+
+            if (File.Exists(strExeFilePath + "git\\git.exe"))
+            {
+                NavigateTo(new ConnectServerViewModel(HostScreen));
+                UpdateCommand();
+                return;
+            }
+
+            if (File.Exists(strExeFilePath + "release.json") && File.Exists(strExeFilePath + "release.new.json"))
+            {
+                string newJson = "";
+                using (StreamReader r = new StreamReader(strExeFilePath + "release.new.json"))
+                {
+                    newJson = r.ReadToEnd();
+                    r.Close();
+                }
+
+                string oldJson = "";
+                using (StreamReader r = new StreamReader(strExeFilePath + "release.json"))
+                {
+                    oldJson = r.ReadToEnd();
+                    r.Close();
+                }
+
+                if (newJson != oldJson)
+                {
+                    var json = JsonConvert.DeserializeObject<ReleaseNotes>(newJson);
+                    SendNotification("SPO Update Available", $"{json.body}");
+                }
+
+                return;
+            }
         }
     }
 }

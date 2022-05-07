@@ -11,6 +11,10 @@ using Splat;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Threading.Tasks;
+using System.IO;
+using System.Reactive.Disposables;
+using System.Threading;
+using System.Diagnostics;
 
 namespace Aki.Launcher.ViewModels
 {
@@ -25,6 +29,14 @@ namespace Aki.Launcher.ViewModels
 
         public LoginViewModel(IScreen Host, bool NoAutoLogin = false) : base(Host)
         {
+            this.WhenActivated((CompositeDisposable disposables) =>
+            {
+                Task.Run(() =>
+                {
+                    UpdateStatus();
+                });
+            });
+
             //setup reactive commands
             LoginCommand = ReactiveCommand.CreateFromTask(async () =>
             {
@@ -109,7 +121,7 @@ namespace Aki.Launcher.ViewModels
             backgroundImage.Touch();
 
             //handle auto-login
-            if(LauncherSettingsProvider.Instance.UseAutoLogin && LauncherSettingsProvider.Instance.Server.AutoLoginCreds != null && !NoAutoLogin)
+            if (LauncherSettingsProvider.Instance.UseAutoLogin && LauncherSettingsProvider.Instance.Server.AutoLoginCreds != null && !NoAutoLogin)
             {
                 Task.Run(() =>
                 {
@@ -162,12 +174,44 @@ namespace Aki.Launcher.ViewModels
             }
         }
 
-        public void UpdateCommand()
-        {            
+        private async Task UpdateStatus()
+        {
             var strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
 
-            var strCmdText = "/C git\\update.bat";
-            System.Diagnostics.Process.Start("CMD.exe",strCmdText);
+            if (File.Exists(strExeFilePath + "git\\git.exe"))
+            {
+                NavigateTo(new ConnectServerViewModel(HostScreen));
+
+                var strCmdText = "/C git\\update.bat";
+                System.Diagnostics.Process.Start("CMD.exe",strCmdText);
+                return;
+            }
+
+            if (File.Exists(strExeFilePath + "release.json"))
+            {
+                ProcessStartInfo start =
+                    new ProcessStartInfo();
+                    start.FileName = "CMD.exe";
+                    start.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden; //Hides GUI
+                    start.CreateNoWindow = true;
+                    start.Arguments = "/C git\\mingw64\\bin\\curl.exe -H \"Accept: application/vnd.github.v3 + json\" https://api.github.com/repos/kobrakon/SPO_DEV/releases/latest -o release.new.json";
+
+                Process.Start(start);
+
+                while (!File.Exists(strExeFilePath + "release.new.json"))
+                    Thread.Sleep(10);
+            }
+            else
+            {
+                ProcessStartInfo start =
+                    new ProcessStartInfo();
+                    start.FileName = "CMD.exe";
+                    start.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden; //Hides GUI
+                    start.CreateNoWindow = true;
+                    start.Arguments = "/C git\\mingw64\\bin\\curl.exe -H \"Accept: application/vnd.github.v3 + json\" https://api.github.com/repos/kobrakon/SPO_DEV/releases/latest -o release.json";
+
+                Process.Start(start);
+            }
         }
     }
 }
