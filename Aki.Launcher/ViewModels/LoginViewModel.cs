@@ -15,6 +15,7 @@ using System.IO;
 using System.Reactive.Disposables;
 using System.Threading;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace Aki.Launcher.ViewModels
 {

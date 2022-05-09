@@ -22,7 +22,7 @@ namespace Aki.Launcher.ViewModels
     public class ProfileViewModel : ViewModelBase
     {
         public string CurrentUsername { get; set; }
-
+        private bool _UpdateAvailable { get; set; } = false;
         private string _CurrentEdition;
         public string CurrentEdition
         {
@@ -291,12 +291,17 @@ namespace Aki.Launcher.ViewModels
 
         public void UpdateCommand()
         {
-            NavigateTo(new ConnectServerViewModel(HostScreen, true));
-            
-            var strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            if (_UpdateAvailable)
+            {
+                NavigateTo(new ConnectServerViewModel(HostScreen, true));
 
-            var strCmdText = "/C git\\update.bat";
-            System.Diagnostics.Process.Start("CMD.exe",strCmdText);
+                var strCmdText = "/C git\\update.bat";
+                System.Diagnostics.Process.Start("CMD.exe",strCmdText);
+            }
+            else
+            {
+                SendNotification("", "No Update Available");
+            }            
         }
 
         private async Task UpdateStatus()
@@ -326,10 +331,14 @@ namespace Aki.Launcher.ViewModels
                     r.Close();
                 }
 
-                if (newJson != oldJson)
+                var newID = JsonConvert.DeserializeObject<ReleaseNotes>(newJson).id;
+                var oldID = JsonConvert.DeserializeObject<ReleaseNotes>(oldJson).id;
+
+                if (newID != oldID)
                 {
-                    var json = JsonConvert.DeserializeObject<ReleaseNotes>(newJson);
-                    SendNotification("SPO Update Available", $"{json.body}");
+                    _UpdateAvailable = true;
+                    var notes = JsonConvert.DeserializeObject<ReleaseNotes>(newJson).body;
+                    SendNotification("SPO Update Available", $"{notes}");   
                 }
 
                 return;

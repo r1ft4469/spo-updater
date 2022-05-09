@@ -57,7 +57,7 @@
 
     <Button Content="Update SPO" Classes="yellow"
 					Grid.Row="2" Grid.Column="1"
-					Command="{Binding UpdateCommand}"/>  
+					Command="{Binding UpdateCommand}"/>
 
     <!-- Bottom bar -->
     <Border Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" CornerRadius="5"
