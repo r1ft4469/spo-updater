@@ -23,4 +23,20 @@ namespace Aki.Launcher.Models
         public string zipball_url { get; set; }
         public string body { get; set; }
     }
+
+
+    public class Commit
+    {
+        public string sha { get; set; }
+        public string node_id { get; set; }
+        public object commit { get; set; }
+        public string url { get; set; }
+        public string html_url { get; set; }
+        public string comments_url { get; set; }
+        public object author { get; set; }
+        public object committer { get; set; }
+        public object[] parents { get; set; }
+        public object stats { get; set; }
+        public object[] files { get; set; }
+    }
 }

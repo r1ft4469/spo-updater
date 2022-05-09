@@ -177,9 +177,9 @@ namespace Aki.Launcher.ViewModels
 
         private async Task UpdateStatus()
         {
-            var strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location + "git\\";
 
-            if (File.Exists(strExeFilePath + "git\\git.exe"))
+            if (File.Exists(strExeFilePath + "git.exe"))
             {
                 NavigateTo(new ConnectServerViewModel(HostScreen));
 
@@ -195,11 +195,23 @@ namespace Aki.Launcher.ViewModels
                     start.FileName = "CMD.exe";
                     start.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden; //Hides GUI
                     start.CreateNoWindow = true;
-                    start.Arguments = "/C git\\mingw64\\bin\\curl.exe -H \"Accept: application/vnd.github.v3 + json\" https://api.github.com/repos/kobrakon/SPO_DEV/releases/latest -o release.new.json";
+                    start.Arguments = "/C git\\mingw64\\bin\\curl.exe -H \"Accept: application/vnd.github.v3 + json\" https://api.github.com/repos/kobrakon/SPO_DEV/commits/main -o git\\release.new.json";
 
                 Process.Start(start);
 
                 while (!File.Exists(strExeFilePath + "release.new.json"))
+                    Thread.Sleep(10);
+
+                ProcessStartInfo startnotes =
+                    new ProcessStartInfo();
+                startnotes.FileName = "CMD.exe";
+                startnotes.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden; //Hides GUI
+                startnotes.CreateNoWindow = true;
+                startnotes.Arguments = "/C git\\mingw64\\bin\\curl.exe -H \"Accept: application/vnd.github.v3 + json\" https://api.github.com/repos/kobrakon/SPO_DEV/releases/latest -o git\\notes.json";
+
+                Process.Start(startnotes);
+
+                while (!File.Exists(strExeFilePath + "notes.json"))
                     Thread.Sleep(10);
             }
             else
@@ -209,7 +221,7 @@ namespace Aki.Launcher.ViewModels
                     start.FileName = "CMD.exe";
                     start.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden; //Hides GUI
                     start.CreateNoWindow = true;
-                    start.Arguments = "/C git\\mingw64\\bin\\curl.exe -H \"Accept: application/vnd.github.v3 + json\" https://api.github.com/repos/kobrakon/SPO_DEV/releases/latest -o release.json";
+                    start.Arguments = "/C git\\mingw64\\bin\\curl.exe -H \"Accept: application/vnd.github.v3 + json\" https://api.github.com/repos/kobrakon/SPO_DEV/commits/main -o git\\release.json";
 
                 Process.Start(start);
             }

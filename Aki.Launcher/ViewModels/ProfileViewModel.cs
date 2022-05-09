@@ -306,9 +306,9 @@ namespace Aki.Launcher.ViewModels
 
         private async Task UpdateStatus()
         {
-            var strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location + "git\\";
 
-            if (File.Exists(strExeFilePath + "git\\git.exe"))
+            if (File.Exists(strExeFilePath + "git.exe"))
             {
                 NavigateTo(new ConnectServerViewModel(HostScreen));
                 UpdateCommand();
@@ -331,13 +331,20 @@ namespace Aki.Launcher.ViewModels
                     r.Close();
                 }
 
-                var newID = JsonConvert.DeserializeObject<ReleaseNotes>(newJson).id;
-                var oldID = JsonConvert.DeserializeObject<ReleaseNotes>(oldJson).id;
+                var newID = JsonConvert.DeserializeObject<Commit>(newJson).sha;
+                var oldID = JsonConvert.DeserializeObject<Commit>(oldJson).sha;
 
                 if (newID != oldID)
                 {
                     _UpdateAvailable = true;
-                    var notes = JsonConvert.DeserializeObject<ReleaseNotes>(newJson).body;
+                    string notesJson = "";
+                    using (StreamReader r = new StreamReader(strExeFilePath + "notes.json"))
+                    {
+                        notesJson = r.ReadToEnd();
+                        r.Close();
+                    }
+
+                    var notes = JsonConvert.DeserializeObject<ReleaseNotes>(notesJson).body;
                     SendNotification("SPO Update Available", $"{notes}");   
                 }
 
