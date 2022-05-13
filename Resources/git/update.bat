@@ -1,7 +1,8 @@
 @echo off
+taskkill /F /IM Server.exe
+taskkill /F /IM Aki.Launcher.exe
 del git\release.json
 move git\release.new.json git\release.json
-taskkill /F /IM Server.exe
 IF EXIST "git\git.exe" (
     git\git.exe -y -gm2 -InstallPath="git"
     del git\git.exe
@@ -31,4 +32,5 @@ del .\BepInEx\plugins\r1ft.Headlamps.dll
 xcopy /Y /E .\user\mods\r1ft-DynamicTimeCycle\r1ft.DynamicTimeCyle.dll .\BepInEx\plugins\r1ft.DynamicTimeCyle.dll*
 xcopy /Y /E .\user\mods\.SPO\mods\Headlamps\r1ft.Headlamps.dll .\BepInEx\plugins\r1ft.Headlamps.dll*
 rmdir /Q /S update
+start "" "Aki.Launcher.exe"
 Server.exe

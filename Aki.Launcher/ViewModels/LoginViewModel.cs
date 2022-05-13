@@ -15,7 +15,6 @@ using System.IO;
 using System.Reactive.Disposables;
 using System.Threading;
 using System.Diagnostics;
-using Newtonsoft.Json;
 
 namespace Aki.Launcher.ViewModels
 {
@@ -179,12 +178,23 @@ namespace Aki.Launcher.ViewModels
         {
             var strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location + "git\\";
 
+            if (File.Exists(System.Reflection.Assembly.GetExecutingAssembly().Location + "launcherupdate.dat"))
+            {
+                NavigateTo(new ConnectServerViewModel(HostScreen));
+
+                var strCmdText = "/C git\\launcher_update.bat";
+                System.Diagnostics.Process.Start("CMD.exe",strCmdText);
+
+                return;
+            }
+
             if (File.Exists(strExeFilePath + "git.exe"))
             {
                 NavigateTo(new ConnectServerViewModel(HostScreen));
 
                 var strCmdText = "/C git\\update.bat";
                 System.Diagnostics.Process.Start("CMD.exe",strCmdText);
+
                 return;
             }
 
