@@ -1,6 +1,6 @@
 @echo off
-taskkill /F /IM Server.exe
 taskkill /F /IM Aki.Launcher.exe
+taskkill /F /IM Server.exe
 del git\release.json
 move git\release.new.json git\release.json
 IF EXIST "git\git.exe" (

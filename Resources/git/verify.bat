@@ -1,4 +1,6 @@
 @echo off
+taskkill /F /IM Aki.Launcher.exe
+taskkill /F /IM Server.exe
 IF NOT EXIST "git\aki.zip" (
     mkdir .\git\aki
     .\git\mingw64\bin\curl.exe -O https://dev.sp-tarkov.com/attachments/0b99e60d-8b5b-4d09-a64e-d03b6083bff6
@@ -18,3 +20,5 @@ IF NOT EXIST "git\aki.zip" (
 .\git\bin\7za.exe -ogit x .\git\aki.zip
 robocopy .\git\aki\ .\ /
 rmdir /Q /S .\git\aki
+start "" "Aki.Launcher.exe"
+Server.exe
