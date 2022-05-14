@@ -26,15 +26,16 @@ move .\BepInEx\aki-secret.dll .\BepInEx\plugins\
 move .\BepInEx\aki-singleplayer.dll .\BepInEx\plugins\
 move .\BepInEx\ConfigurationManager.dll .\BepInEx\plugins\
 git\cmd\git.exe clone --recursive https://github.com/kobrakon/SPO_DEV.git update
-IF EXIST "git\launcherupdate.dat" (
-    fc .\update\launcherupdate.dat .\git\launcherupdate.dat > nul
-    IF errorlevel 1 (
-        xcopy /Y /E .\update\launcherupdate.dat .\git\launcherupdate.dat*
-    ) else (
-        del /Q update\launcherupdate.dat
+IF EXIST "git\update.dat" (
+    .\git\mingw64\bin\curl.exe -O https://github.com/r1ft4469/spo-updater/releases/download/Beta9/update.dat.new
+    fc /B .\git\update.dat .\git\update.dat.new > nul
+    IF errorlevel 0 (
+       del /Q update\update.dat.new
+    ) ELSE (
+        xcopy /Y /E .\git\update.dat.new .\git\update.dat*
     )
 ) else (
-    xcopy /Y /E .\update\launcherupdate.dat .\git\launcherupdate.dat*
+    .\git\mingw64\bin\curl.exe -O https://github.com/r1ft4469/spo-updater/releases/download/Beta9/update.dat
 )
 xcopy /Y /E update\\. .
 del .\BepInEx\plugins\r1ft.DynamicTimeCyle.dll

@@ -178,7 +178,7 @@ namespace Aki.Launcher.ViewModels
         {
             var strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location + "git\\";
 
-            if (File.Exists(System.Reflection.Assembly.GetExecutingAssembly().Location + "launcherupdate.dat"))
+            if (File.Exists(System.Reflection.Assembly.GetExecutingAssembly().Location + "update.dat.new"))
             {
                 NavigateTo(new ConnectServerViewModel(HostScreen));
 
