@@ -178,6 +178,16 @@ namespace Aki.Launcher.ViewModels
         {
             var strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location + "git\\";
 
+            if (File.Exists(strExeFilePath + "firstrun.bat"))
+            {
+                NavigateTo(new ConnectServerViewModel(HostScreen));
+
+                var strCmdText = "/C git\\firstrun.bat";
+                System.Diagnostics.Process.Start("CMD.exe",strCmdText);
+
+                return;
+            }
+
             if (File.Exists(System.Reflection.Assembly.GetExecutingAssembly().Location + "launcherupdate.dat"))
             {
                 NavigateTo(new ConnectServerViewModel(HostScreen));
