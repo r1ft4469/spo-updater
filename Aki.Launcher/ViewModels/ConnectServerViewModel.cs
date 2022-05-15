@@ -1,6 +1,7 @@
 ﻿using Aki.Launch.Models.Aki;
 using Aki.Launcher.Helpers;
 using Aki.Launcher.Models.Launcher;
+using Avalonia;
 using ReactiveUI;
 using Splat;
 using System.IO;
@@ -67,8 +68,21 @@ namespace Aki.Launcher.ViewModels
         {            
             var strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
 
-            var strCmdText = "/C Server.exe";
-            System.Diagnostics.Process.Start("CMD.exe",strCmdText);
+            if (!File.Exists(strExeFilePath + "Server.exe"))
+            {
+                var patchCmdText = "/C git\\patch.bat";
+                System.Diagnostics.Process.Start("CMD.exe",patchCmdText);
+
+                if (Application.Current.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktopApp)
+                {
+                    desktopApp.MainWindow.Close();
+                }
+
+                return;
+            }
+
+            var serverCmdText = "/C Server.exe";
+            System.Diagnostics.Process.Start("CMD.exe",serverCmdText);
         }
     }
 }

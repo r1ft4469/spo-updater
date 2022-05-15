@@ -3,11 +3,6 @@ taskkill /F /IM Aki.Launcher.exe
 taskkill /F /IM Server.exe
 del git\release.json
 move git\release.new.json git\release.json
-IF EXIST "git\git.exe" (
-    git\git.exe -y -gm2 -InstallPath="git"
-    del git\git.exe
-    del git\git.7z.001
-)
 rmdir /Q /S user\mods
 mkdir user\mods
 move .\BepInEx\plugins\aki-bundles.dll .\BepInEx\

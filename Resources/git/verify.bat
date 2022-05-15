@@ -22,5 +22,8 @@ xcopy /Y /E .\git\spo\user\mods\.SPO\mods\Headlamps\r1ft.Headlamps.dll .\git\spo
 rmdir /Q /S .\git\spo
 robocopy .\git\aki\ .\ /E
 rmdir /Q /S .\git\aki
+if NOT EXIST "user\profiles" (
+    mkdir .\user\profiles
+)
 start "" "Aki.Launcher.exe"
 Server.exe

@@ -15,6 +15,7 @@ using System.IO;
 using System.Reactive.Disposables;
 using System.Threading;
 using System.Diagnostics;
+using Avalonia;
 
 namespace Aki.Launcher.ViewModels
 {
@@ -180,20 +181,26 @@ namespace Aki.Launcher.ViewModels
 
             if (File.Exists(strExeFilePath + "update.dat.new"))
             {
-                NavigateTo(new ConnectServerViewModel(HostScreen));
-
                 var strCmdText = "/C git\\launcher_update.bat";
                 System.Diagnostics.Process.Start("CMD.exe",strCmdText);
+
+                if (Application.Current.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktopApp)
+                {
+                    desktopApp.MainWindow.Close();
+                }
 
                 return;
             }
 
             if (File.Exists(strExeFilePath + "git.exe"))
             {
-                NavigateTo(new ConnectServerViewModel(HostScreen));
-
                 var strCmdText = "/C git\\update.bat";
                 System.Diagnostics.Process.Start("CMD.exe",strCmdText);
+
+                if (Application.Current.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktopApp)
+                {
+                    desktopApp.MainWindow.Close();
+                }
 
                 return;
             }

@@ -301,10 +301,15 @@ namespace Aki.Launcher.ViewModels
         {
             if (_UpdateAvailable)
             {
-                NavigateTo(new ConnectServerViewModel(HostScreen, true));
-
                 var strCmdText = "/C git\\update.bat";
                 System.Diagnostics.Process.Start("CMD.exe",strCmdText);
+
+                if (Application.Current.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktopApp)
+                {
+                    desktopApp.MainWindow.Close();
+                }
+
+                return;
             }
             else
             {
@@ -318,7 +323,6 @@ namespace Aki.Launcher.ViewModels
 
             if (File.Exists(strExeFilePath + "git.exe"))
             {
-                NavigateTo(new ConnectServerViewModel(HostScreen));
                 UpdateCommand();
                 return;
             }
