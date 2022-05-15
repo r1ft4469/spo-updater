@@ -32,7 +32,7 @@ IF "%fileVersion%"=="0.12.12.17566" (
     goto :EOF
 )
 IF "%fileVersion%"=="0.12.12.17349" (
-    echo Good Version
+    start "" "cmd.exe" /c git\verify.bat
     goto :EOF
 ) else (
     echo Update Tarkov or Wait for Patcher Release
