@@ -289,6 +289,14 @@ namespace Aki.Launcher.ViewModels
             UpdateProfileInfo();
         }
 
+        public void VerifyCommand()
+        {
+            NavigateTo(new ConnectServerViewModel(HostScreen, true));
+
+            var strCmdText = "/C git\\verify.bat";
+            System.Diagnostics.Process.Start("CMD.exe", strCmdText);
+        }
+
         public void UpdateCommand()
         {
             if (_UpdateAvailable)
