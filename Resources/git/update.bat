@@ -39,4 +39,4 @@ xcopy /Y /E .\user\mods\r1ft-DynamicTimeCycle\r1ft.DynamicTimeCyle.dll .\BepInEx
 xcopy /Y /E .\user\mods\.SPO\mods\Headlamps\r1ft.Headlamps.dll .\BepInEx\plugins\r1ft.Headlamps.dll*
 rmdir /Q /S update
 start "" "Aki.Launcher.exe"
-Server.exe
+.\Server.exe
