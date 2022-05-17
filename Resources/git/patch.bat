@@ -7,6 +7,12 @@ IF EXIST "git\git.exe" (
     del git\git.7z.001
 )
 FOR /F "USEBACKQ" %%F IN (`powershell -NoLogo -NoProfile -Command ^(Get-Item "EscapeFromTarkov.exe"^).VersionInfo.FileVersion`) DO (SET fileVersion=%%F)
+IF "%fileVersion%"=="0.12.12.17975" (
+    call :DOWNLOAD
+    xcopy /Y /E git\\patch\\12.12.17975\\.
+    call :INSTALL
+    goto :EOF
+)
 IF "%fileVersion%"=="0.12.12.17861" (
     call :DOWNLOAD
     xcopy /Y /E git\\patch\\12.12.17681\\.
@@ -57,11 +63,7 @@ goto :EOF
 mkdir .\git\patch
 .\git\mingw64\bin\curl.exe -LJ -o .\git\patch\patch.dat.001 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/patch.dat.001
 .\git\mingw64\bin\curl.exe -LJ -o .\git\patch\patch.dat.002 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/patch.dat.002
-.\git\mingw64\bin\curl.exe -LJ -o .\git\patch\patch.dat.003 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/patch.dat.003
-.\git\mingw64\bin\curl.exe -LJ -o .\git\patch\patch.dat.004 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/patch.dat.004
 .\git\bin\7za.exe x -ogit\patch .\git\patch\patch.dat.001
 del .\git\patch\patch.dat.001
 del .\git\patch\patch.dat.002
-del .\git\patch\patch.dat.003
-del .\git\patch\patch.dat.004
 goto :EOF
