@@ -15,10 +15,8 @@ copy /Y .\git\update.dat .\git\aki\update.exe
 del /F /Q .\git\aki\update.exe
 git\cmd\git.exe clone --recursive https://github.com/kobrakon/SPO_DEV.git .\git\spo
 xcopy /Y /E git\\spo\\. git\\aki\\.
-del .\git\spo\BepInEx\plugins\r1ft.DynamicTimeCyle.dll
-del .\git\spo\BepInEx\plugins\r1ft.Headlamps.dll
-xcopy /Y /E .\git\spo\user\mods\r1ft-DynamicTimeCycle\r1ft.DynamicTimeCyle.dll .\git\spo\BepInEx\plugins\r1ft.DynamicTimeCyle.dll*
-xcopy /Y /E .\git\spo\user\mods\.SPO\mods\Headlamps\r1ft.Headlamps.dll .\git\spo\BepInEx\plugins\r1ft.Headlamps.dll*
+xcopy /Y /E .\git\spo\user\mods\r1ft-DynamicTimeCycle\r1ft.DynamicTimeCyle.dll .\git\aki\BepInEx\plugins\r1ft.DynamicTimeCyle.dll*
+xcopy /Y /E .\git\spo\user\mods\.SPO\mods\Headlamps\r1ft.Headlamps.dll .\git\aki\BepInEx\plugins\r1ft.Headlamps.dll*
 rmdir /Q /S .\git\spo
 robocopy .\git\aki\ .\ /E
 rmdir /Q /S .\git\aki
@@ -26,4 +24,4 @@ if NOT EXIST "user\profiles" (
     mkdir .\user\profiles
 )
 start "" "Aki.Launcher.exe"
-.\Server.exe
+Server.exe
