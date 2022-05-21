@@ -2,10 +2,13 @@
 taskkill /F /IM Aki.Launcher.exe
 taskkill /F /IM Server.exe
 mkdir .\git\aki
-.\git\mingw64\bin\curl.exe -O https://dev.sp-tarkov.com/attachments/0b99e60d-8b5b-4d09-a64e-d03b6083bff6
-move .\0b99e60d-8b5b-4d09-a64e-d03b6083bff6 .\git\aki\aki.zip
-.\git\bin\7za.exe x -ogit\aki .\git\aki\aki.zip
-del /F /Q .\git\aki\aki.zip
+.\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/aki.dat.001
+.\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/aki.dat.002
+move .\aki.dat.001 .\git\aki\aki.dat.001
+move .\aki.dat.002 .\git\aki\aki.dat.002
+.\git\bin\7za.exe x -ogit\aki .\git\aki\aki.dat.001
+del /F /Q .\git\aki\aki.dat.001
+del /F /Q .\git\aki\aki.dat.002
 .\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/update.dat
 move /Y .\update.dat .\git\update.dat
 copy /Y .\git\update.dat .\git\aki\update.exe
