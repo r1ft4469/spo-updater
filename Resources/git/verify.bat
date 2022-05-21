@@ -9,6 +9,10 @@ del /F /Q .\git\aki\aki.zip
 if NOT EXIST "git\update.dat" (
     .\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/update.dat
     move /Y .\update.dat .\git\update.dat
+) ELSE (
+    del /F /Q .\git\update.dat
+    .\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/update.dat
+    move /Y .\update.dat .\git\update.dat
 )
 copy /Y .\git\update.dat .\git\aki\update.exe
 .\git\aki\update.exe -y -gm2
