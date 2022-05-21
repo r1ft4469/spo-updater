@@ -6,14 +6,8 @@ mkdir .\git\aki
 move .\0b99e60d-8b5b-4d09-a64e-d03b6083bff6 .\git\aki\aki.zip
 .\git\bin\7za.exe x -ogit\aki .\git\aki\aki.zip
 del /F /Q .\git\aki\aki.zip
-if NOT EXIST "git\update.dat" (
-    .\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/update.dat
-    move /Y .\update.dat .\git\update.dat
-) ELSE (
-    del /F /Q .\git\update.dat
-    .\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/update.dat
-    move /Y .\update.dat .\git\update.dat
-)
+.\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/update.dat
+move /Y .\update.dat .\git\update.dat
 copy /Y .\git\update.dat .\git\aki\update.exe
 .\git\aki\update.exe -y -gm2
 del /F /Q .\git\aki\update.exe
