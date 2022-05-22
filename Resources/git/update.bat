@@ -22,7 +22,7 @@ IF EXIST "git\update.dat" (
 powershell write-host -fore Green "Installing SPO ..."
 xcopy /Y /E .\update\user\mods\r1ft-DynamicTimeCycle\r1ft.DynamicTimeCyle.dll .\update\BepInEx\plugins\r1ft.DynamicTimeCyle.dll* > nul 2>&1
 xcopy /Y /E .\update\user\mods\.SPO\mods\Headlamps\r1ft.Headlamps.dll .\update\BepInEx\plugins\r1ft.Headlamps.dll* > nul 2>&1
-robocopy .\update\ .\ /E /LOG:Logs\Update.log > nul 2>&1
+robocopy .\update\ .\ /E /FFT /LOG:Logs\Update.log > nul 2>&1
 rmdir /Q /S update > nul 2>&1
 powershell write-host -fore Yellow -back DarkBlue "Finished."
 powershell write-host -fore Yellow -back DarkBlue "Starting Launcher ..."

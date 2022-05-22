@@ -26,7 +26,7 @@ xcopy /Y /E .\git\spo\user\mods\r1ft-DynamicTimeCycle\r1ft.DynamicTimeCyle.dll .
 xcopy /Y /E .\git\spo\user\mods\.SPO\mods\Headlamps\r1ft.Headlamps.dll .\git\aki\BepInEx\plugins\r1ft.Headlamps.dll* > nul 2>&1
 rmdir /Q /S .\git\spo > nul 2>&1
 powershell write-host -fore Green "Verifying SPO ..."
-robocopy .\git\aki\ .\ /E /LOG:Logs\Verify.log > nul 2>&1
+robocopy .\git\aki\ .\ /E /FFT /LOG:Logs\Verify.log > nul 2>&1
 rmdir /Q /S .\git\aki > nul 2>&1
 if NOT EXIST "user\profiles" (
     mkdir .\user\profiles > nul 2>&1

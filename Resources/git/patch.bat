@@ -94,7 +94,7 @@ powershell write-host -fore Green "Installing SPO ..."
 if NOT EXIST ".\Logs" (
    mkdir .\Logs > nul 2>&1
 )
-robocopy .\git\aki\ .\ /E /LOG:Logs\Install.log > nul 2>&1
+robocopy .\git\aki\ .\ /E /FFT /LOG:Logs\Install.log > nul 2>&1
 rmdir /Q /S .\git\aki > nul 2>&1
 if NOT EXIST "user\profiles" (
     mkdir .\user\profiles > nul 2>&1
