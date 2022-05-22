@@ -73,11 +73,6 @@ namespace Aki.Launcher.ViewModels
                 var patchCmdText = "/C git\\patch.bat";
                 System.Diagnostics.Process.Start("CMD.exe",patchCmdText);
 
-                if (Application.Current.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktopApp)
-                {
-                    desktopApp.MainWindow.Close();
-                }
-
                 return;
             }
 

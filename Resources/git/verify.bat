@@ -25,4 +25,4 @@ if NOT EXIST "user\profiles" (
     mkdir .\user\profiles
 )
 start "" "Aki.Launcher.exe"
-Server.exe
+start "" "Server.exe"
