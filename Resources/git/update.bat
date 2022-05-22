@@ -1,12 +1,12 @@
 @echo off
-powershell write-host -fore Cyan "SPO Update ..."
-powershell write-host -fore Cyan "-----------------------------------------"
+powershell write-host -fore Blue "SPO Update ..."
+powershell write-host -fore Blue "-----------------------------------------"
 taskkill /F /IM Aki.Launcher.exe > nul 2>&1
 taskkill /F /IM Server.exe > nul 2>&1
 del git\release.json > nul 2>&1
 move git\release.new.json git\release.json > nul 2>&1
 call :CLEAN
-powershell write-host -fore Yellow "Getting Newest Version of SPO ..."
+powershell write-host -fore DarkYellow "Getting Newest Version of SPO ..."
 git\cmd\git.exe clone --recursive https://github.com/kobrakon/SPO_DEV.git update > nul 2>&1
 IF EXIST "git\update.dat" (
     .\git\mingw64\bin\curl.exe -LJ -o .\git\update.dat.new https://raw.githubusercontent.com/r1ft4469/spo-updater/update/update.dat > nul 2>&1
@@ -19,20 +19,20 @@ IF EXIST "git\update.dat" (
 ) else (
     .\git\mingw64\bin\curl.exe -O https://raw.githubusercontent.com/r1ft4469/spo-updater/update/update.dat > nul 2>&1
 )
-powershell write-host -fore Yellow "Installing SPO ..."
+powershell write-host -fore DarkYellow "Installing SPO ..."
 xcopy /Y /E .\update\user\mods\r1ft-DynamicTimeCycle\r1ft.DynamicTimeCyle.dll .\update\BepInEx\plugins\r1ft.DynamicTimeCyle.dll* > nul 2>&1
 xcopy /Y /E .\update\user\mods\.SPO\mods\Headlamps\r1ft.Headlamps.dll .\update\BepInEx\plugins\r1ft.Headlamps.dll* > nul 2>&1
 robocopy .\update\ .\ /E /FFT /LOG:Logs\Update.log > nul 2>&1
 rmdir /Q /S update > nul 2>&1
-powershell write-host -fore Cyan "Finished."
-powershell write-host -fore Cyan "Starting Launcher ..."
-powershell write-host -fore Cyan "-----------------------------------------"
+powershell write-host -fore Blue "Finished."
+powershell write-host -fore Blue "Starting Launcher ..."
+powershell write-host -fore Blue "-----------------------------------------"
 start "" "Aki.Launcher.exe"
 .\Server.exe
 goto :EOF
 
 :CLEAN
-powershell write-host -fore Yellow "Cleaning Old Mods ..."
+powershell write-host -fore DarkYellow "Cleaning Old Mods ..."
 rmdir /Q /S user\mods > nul 2>&1
 mkdir user\mods > nul 2>&1
 move .\BepInEx\plugins\aki-bundles.dll .\BepInEx\ > nul 2>&1

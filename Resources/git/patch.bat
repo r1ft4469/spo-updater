@@ -1,17 +1,17 @@
 @echo off
-powershell write-host -fore Cyan "SPO Setup ..."
-powershell write-host -fore Cyan "-----------------------------------------"
+powershell write-host -fore Blue "SPO Setup ..."
+powershell write-host -fore Blue "-----------------------------------------"
 taskkill /F /IM Aki.Launcher.exe > nul 2>&1
 taskkill /F /IM Server.exe > nul 2>&1
 IF EXIST "git\git.exe" (
     attrib +h git > nul 2>&1
-    powershell write-host -fore Yellow "Extracting Setup Files ..."
+    powershell write-host -fore DarkYellow "Extracting Setup Files ..."
     git\git.exe -y -gm2 -InstallPath="git" > nul 2>&1
     del git\git.exe > nul 2>&1
     del git\git.7z.001 > nul 2>&1
 )
 FOR /F "USEBACKQ" %%F IN (`powershell -NoLogo -NoProfile -Command ^(Get-Item "EscapeFromTarkov.exe"^).VersionInfo.FileVersion`) DO (SET fileVersion=%%F)
-powershell write-host -fore Yellow "Downloading Downgrade Patch %fileVersion% ..."
+powershell write-host -fore DarkYellow "Downloading Downgrade Patch %fileVersion% ..."
 IF "%fileVersion%"=="0.12.12.17975" (
     call :DOWNLOAD
     xcopy /Y /E git\\patch\\12.12.17975\\. > nul 2>&1
@@ -54,7 +54,7 @@ IF "%fileVersion%"=="0.12.12.17349" (
 )
 
 :DOWNGRADE
-powershell write-host -fore Yellow "Downgrading Tarkov to Correct Version ..."
+powershell write-host -fore DarkYellow "Downgrading Tarkov to Correct Version ..."
 start "" "patcher.exe"
 ping 127.0.0.1 -n 16 > nul
 :WAIT
@@ -69,28 +69,28 @@ goto :INSTALL
 
 :INSTALL
 mkdir .\git\aki > nul 2>&1
-powershell write-host -fore Yellow "Downloading AKI ..."
+powershell write-host -fore DarkYellow "Downloading AKI ..."
 .\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/aki.dat.001 > nul 2>&1
 .\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/aki.dat.002 > nul 2>&1
 move .\aki.dat.001 .\git\aki\aki.dat.001 > nul 2>&1
 move .\aki.dat.002 .\git\aki\aki.dat.002 > nul 2>&1
-powershell write-host -fore Yellow "Setting Up AKI ..."
+powershell write-host -fore DarkYellow "Setting Up AKI ..."
 .\git\bin\7za.exe x -ogit\aki .\git\aki\aki.dat.001 > nul 2>&1
 del /F /Q .\git\aki\aki.dat.001 > nul 2>&1
 del /F /Q .\git\aki\aki.dat.002 > nul 2>&1
-powershell write-host -fore Yellow "Checking Launcher for Newest Version ..."
+powershell write-host -fore DarkYellow "Checking Launcher for Newest Version ..."
 .\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/update.dat > nul 2>&1
 move /Y .\update.dat .\git\update.dat > nul 2>&1
 copy /Y .\git\update.dat .\git\aki\update.exe > nul 2>&1
 .\git\aki\update.exe -y -gm2 > nul 2>&1
 del /F /Q .\git\aki\update.exe > nul 2>&1
-powershell write-host -fore Yellow "Downloading SPO ..."
+powershell write-host -fore DarkYellow "Downloading SPO ..."
 git\cmd\git.exe clone --recursive https://github.com/kobrakon/SPO_DEV.git .\git\spo > nul 2>&1
 xcopy /Y /E git\\spo\\. git\\aki\\. > nul 2>&1
 xcopy /Y /E .\git\spo\user\mods\r1ft-DynamicTimeCycle\r1ft.DynamicTimeCyle.dll .\git\aki\BepInEx\plugins\r1ft.DynamicTimeCyle.dll* > nul 2>&1
 xcopy /Y /E .\git\spo\user\mods\.SPO\mods\Headlamps\r1ft.Headlamps.dll .\git\aki\BepInEx\plugins\r1ft.Headlamps.dll* > nul 2>&1
 rmdir /Q /S .\git\spo > nul 2>&1
-powershell write-host -fore Yellow "Installing SPO ..."
+powershell write-host -fore DarkYellow "Installing SPO ..."
 if NOT EXIST ".\Logs" (
    mkdir .\Logs > nul 2>&1
 )
@@ -99,9 +99,9 @@ rmdir /Q /S .\git\aki > nul 2>&1
 if NOT EXIST "user\profiles" (
     mkdir .\user\profiles > nul 2>&1
 )
-powershell write-host -fore Cyan "Finished."
-powershell write-host -fore Cyan "Starting Launcher ..."
-powershell write-host -fore Cyan "-----------------------------------------"
+powershell write-host -fore Blue "Finished."
+powershell write-host -fore Blue "Starting Launcher ..."
+powershell write-host -fore Blue "-----------------------------------------"
 start "" "Aki.Launcher.exe"
 .\Server.exe
 goto :EOF
