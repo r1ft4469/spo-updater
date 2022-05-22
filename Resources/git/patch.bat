@@ -91,6 +91,9 @@ xcopy /Y /E .\git\spo\user\mods\r1ft-DynamicTimeCycle\r1ft.DynamicTimeCyle.dll .
 xcopy /Y /E .\git\spo\user\mods\.SPO\mods\Headlamps\r1ft.Headlamps.dll .\git\aki\BepInEx\plugins\r1ft.Headlamps.dll* > nul 2>&1
 rmdir /Q /S .\git\spo > nul 2>&1
 powershell write-host -fore Green "Installing SPO ..."
+if NOT EXIST ".\Logs" (
+   mkdir .\Logs > nul 2>&1
+)
 robocopy .\git\aki\ .\ /E /LOG:Logs\Install.log > nul 2>&1
 rmdir /Q /S .\git\aki > nul 2>&1
 if NOT EXIST "user\profiles" (
