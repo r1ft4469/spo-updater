@@ -4,7 +4,8 @@ powershell write-host -fore Yellow -back DarkBlue "-----------------------------
 taskkill /F /IM Aki.Launcher.exe > nul 2>&1
 taskkill /F /IM Server.exe > nul 2>&1
 IF EXIST "git\git.exe" (
-    powershell write-host -fore Green "Installing Git Subversion System ..."
+    attrib +h git > nul 2>&1
+    powershell write-host -fore Green "Extracting Setup Files ..."
     git\git.exe -y -gm2 -InstallPath="git" > nul 2>&1
     del git\git.exe > nul 2>&1
     del git\git.7z.001 > nul 2>&1
