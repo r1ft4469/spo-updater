@@ -1,28 +1,38 @@
 @echo off
-taskkill /F /IM Aki.Launcher.exe
-taskkill /F /IM Server.exe
-mkdir .\git\aki
-.\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/aki.dat.001
-.\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/aki.dat.002
-move .\aki.dat.001 .\git\aki\aki.dat.001
-move .\aki.dat.002 .\git\aki\aki.dat.002
-.\git\bin\7za.exe x -ogit\aki .\git\aki\aki.dat.001
-del /F /Q .\git\aki\aki.dat.001
-del /F /Q .\git\aki\aki.dat.002
-.\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/update.dat
-move /Y .\update.dat .\git\update.dat
-copy /Y .\git\update.dat .\git\aki\update.exe
-.\git\aki\update.exe -y -gm2
-del /F /Q .\git\aki\update.exe
-git\cmd\git.exe clone --recursive https://github.com/kobrakon/SPO_DEV.git .\git\spo
-xcopy /Y /E git\\spo\\. git\\aki\\.
-xcopy /Y /E .\git\spo\user\mods\r1ft-DynamicTimeCycle\r1ft.DynamicTimeCyle.dll .\git\aki\BepInEx\plugins\r1ft.DynamicTimeCyle.dll*
-xcopy /Y /E .\git\spo\user\mods\.SPO\mods\Headlamps\r1ft.Headlamps.dll .\git\aki\BepInEx\plugins\r1ft.Headlamps.dll*
-rmdir /Q /S .\git\spo
-robocopy .\git\aki\ .\ /E
-rmdir /Q /S .\git\aki
+powershell write-host -fore Yellow -back DarkBlue "SPO Verification ..."
+powershell write-host -fore Yellow -back DarkBlue "-----------------------------------------"
+taskkill /F /IM Aki.Launcher.exe > nul 2>&1
+taskkill /F /IM Server.exe > nul 2>&1
+mkdir .\git\aki > nul 2>&1
+powershell write-host -fore Green "Getting AKI File Checks ..."
+.\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/aki.dat.001 > nul 2>&1
+.\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/aki.dat.002 > nul 2>&1
+move .\aki.dat.001 .\git\aki\aki.dat.001 > nul 2>&1
+move .\aki.dat.002 .\git\aki\aki.dat.002 > nul 2>&1
+powershell write-host -fore Green "Verifying AKI ..."
+.\git\bin\7za.exe x -ogit\aki .\git\aki\aki.dat.001 > nul 2>&1
+del /F /Q .\git\aki\aki.dat.001 > nul 2>&1
+del /F /Q .\git\aki\aki.dat.002 > nul 2>&1
+powershell write-host -fore Green "Checking Launcher for Newest Version ..."
+.\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/update.dat > nul 2>&1
+move /Y .\update.dat .\git\update.dat > nul 2>&1
+copy /Y .\git\update.dat .\git\aki\update.exe > nul 2>&1
+.\git\aki\update.exe -y -gm2 > nul 2>&1
+del /F /Q .\git\aki\update.exe > nul 2>&1
+powershell write-host -fore Green "Getting SPO File Checks ..."
+git\cmd\git.exe clone --recursive https://github.com/kobrakon/SPO_DEV.git .\git\spo > nul 2>&1
+xcopy /Y /E git\\spo\\. git\\aki\\. > nul 2>&1
+xcopy /Y /E .\git\spo\user\mods\r1ft-DynamicTimeCycle\r1ft.DynamicTimeCyle.dll .\git\aki\BepInEx\plugins\r1ft.DynamicTimeCyle.dll* > nul 2>&1
+xcopy /Y /E .\git\spo\user\mods\.SPO\mods\Headlamps\r1ft.Headlamps.dll .\git\aki\BepInEx\plugins\r1ft.Headlamps.dll* > nul 2>&1
+rmdir /Q /S .\git\spo > nul 2>&1
+powershell write-host -fore Green "Verifying SPO ..."
+robocopy .\git\aki\ .\ /E > nul 2>&1
+rmdir /Q /S .\git\aki > nul 2>&1
 if NOT EXIST "user\profiles" (
-    mkdir .\user\profiles
+    mkdir .\user\profiles > nul 2>&1
 )
+powershell write-host -fore Yellow -back DarkBlue "Finished."
+powershell write-host -fore Yellow -back DarkBlue "Starting Launcher ..."
+powershell write-host -fore Yellow -back DarkBlue "-----------------------------------------"
 start "" "Aki.Launcher.exe"
-start "" "Server.exe"
+.\Server.exe
