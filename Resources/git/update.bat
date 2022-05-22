@@ -29,7 +29,7 @@ IF EXIST "git\update.dat" (
     .\git\mingw64\bin\curl.exe -LJ -o .\git\update.dat.new https://raw.githubusercontent.com/r1ft4469/spo-updater/update/update.dat > nul 2>&1
     fc /B .\git\update.dat .\git\update.dat.new > nul > nul 2>&1
     IF errorlevel 0 (
-       del /Q update\update.dat.new
+       del /Q update\update.dat.new > nul 2>&1
     ) ELSE (
         xcopy /Y /E .\git\update.dat.new .\git\update.dat* > nul 2>&1
     )
