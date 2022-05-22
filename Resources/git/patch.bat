@@ -15,36 +15,36 @@ powershell write-host -fore Green "Downloading Downgrade Patch %fileVersion% ...
 IF "%fileVersion%"=="0.12.12.17975" (
     call :DOWNLOAD
     xcopy /Y /E git\\patch\\12.12.17975\\. > nul 2>&1
-    call :INSTALL
+    call :DOWNGRADE
     goto :EOF
 )
 IF "%fileVersion%"=="0.12.12.17861" (
     call :DOWNLOAD
     xcopy /Y /E git\\patch\\12.12.17681\\. > nul 2>&1
-    call :INSTALL
+    call :DOWNGRADE
     goto :EOF
 )
 IF "%fileVersion%"=="0.12.12.17686" (
     call :DOWNLOAD
     echo Installing Downgrade Patch 17686 ...
     xcopy /Y /E git\\patch\\12.12.17686\\. > nul 2>&1
-    call :INSTALL
+    call :DOWNGRADE
     goto :EOF
 )
 IF "%fileVersion%"=="0.12.12.17639" (
     call :DOWNLOAD
     xcopy /Y /E git\\patch\\12.12.17639\\. > nul 2>&1
-    call :INSTALL
+    call :DOWNGRADE
     goto :EOF
 )
 IF "%fileVersion%"=="0.12.12.17566" (
     call :DOWNLOAD
     xcopy /Y /E git\\patch\\12.12.17566\\. > nul 2>&1
-    call :INSTALL
+    call :DOWNGRADE
     goto :EOF
 )
 IF "%fileVersion%"=="0.12.12.17349" (
-    start "" "cmd.exe" /c git\verify.bat
+    call :INSTALL
     goto :EOF
 ) else (
     powershell write-host -fore Red "Update Tarkov or Wait for Patcher Release"
@@ -53,7 +53,7 @@ IF "%fileVersion%"=="0.12.12.17349" (
     goto :EOF
 )
 
-:INSTALL
+:DOWNGRADE
 powershell write-host -fore Green "Downgrading Tarkov to Correct Version ..."
 start "" "patcher.exe"
 ping 127.0.0.1 -n 16 > nul
@@ -65,6 +65,9 @@ IF EXIST "PATCHER_TEMP" (
 taskkill /F /IM patcher.exe > nul 2>&1
 rmdir /Q /S .\git\patch > nul 2>&1
 del patcher.exe > nul 2>&1
+goto :INSTALL
+
+:INSTALL
 mkdir .\git\aki > nul 2>&1
 powershell write-host -fore Green "Downloading AKI ..."
 .\git\mingw64\bin\curl.exe -LJO https://raw.githubusercontent.com/r1ft4469/spo-updater/update/aki.dat.001 > nul 2>&1
