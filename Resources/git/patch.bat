@@ -13,6 +13,12 @@ IF EXIST "git\git.exe" (
 )
 FOR /F "USEBACKQ" %%F IN (`powershell -NoLogo -NoProfile -Command ^(Get-Item "EscapeFromTarkov.exe"^).VersionInfo.FileVersion`) DO (SET fileVersion=%%F)
 powershell write-host -fore DarkYellow "Downloading Downgrade Patch %fileVersion% ..."
+IF "%fileVersion%"=="0.12.12.18103" (
+    call :DOWNLOAD
+    xcopy /Y /E git\\patch\\12.12.18103\\. > nul 2>&1
+    call :DOWNGRADE
+    goto :EOF
+)
 IF "%fileVersion%"=="0.12.12.17975" (
     call :DOWNLOAD
     xcopy /Y /E git\\patch\\12.12.17975\\. > nul 2>&1
@@ -111,7 +117,9 @@ goto :EOF
 mkdir .\git\patch > nul 2>&1
 .\git\mingw64\bin\curl.exe -LJ -o .\git\patch\patch.dat.001 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/patch.dat.001 > nul 2>&1
 .\git\mingw64\bin\curl.exe -LJ -o .\git\patch\patch.dat.002 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/patch.dat.002 > nul 2>&1
+.\git\mingw64\bin\curl.exe -LJ -o .\git\patch\patch.dat.003 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/patch.dat.003 > nul 2>&1
 .\git\bin\7za.exe x -ogit\patch .\git\patch\patch.dat.001 > nul 2>&1
 del .\git\patch\patch.dat.001 > nul 2>&1
 del .\git\patch\patch.dat.002 > nul 2>&1
+del .\git\patch\patch.dat.003 > nul 2>&1
 goto :EOF
