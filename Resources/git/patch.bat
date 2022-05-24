@@ -1,4 +1,5 @@
 @echo off
+del /F /Q .\git\install
 powershell write-host -fore Blue "SPO Setup ..."
 powershell write-host -fore Blue "-----------------------------------------"
 taskkill /F /IM Aki.Launcher.exe > nul 2>&1

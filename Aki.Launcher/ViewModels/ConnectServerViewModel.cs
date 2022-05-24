@@ -75,6 +75,16 @@ namespace Aki.Launcher.ViewModels
 
                 return;
             }
+            else
+            {
+                if (File.Exists(strExeFilePath + "git\\install"))
+                {
+                    var patchCmdText = "/K git\\README.bat";
+                    System.Diagnostics.Process.Start("CMD.exe", patchCmdText);
+
+                    return;
+                }
+            }
 
             var serverCmdText = "/C Server.exe";
             System.Diagnostics.Process.Start("CMD.exe",serverCmdText);
