@@ -2,9 +2,9 @@
 
 ## Install Instructions
 
-1. Install a fresh copy of AKI (You do not have to launch server or game now)
-2. Install in the root directory of your AKI install replacing launcher.
+1. Make a copy of EFT Folder.
+2. Do NOT install SPT manually.
+3. Copy the Launcher to to the New Folder.
 4. Run the Lancher click "Start Server"
 5. Click "Retry" in Lancher when Server is Ready
-7. Wait for the Server to Restart
-8. Enjoy SPO
+6. Enjoy SPO
