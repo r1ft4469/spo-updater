@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aki.Launcher.CLI", "Aki.Lau
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aki.Launcher", "Aki.Launcher\Aki.Launcher.csproj", "{C566CA5A-0B68-4F76-A980-8BC0FE701491}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Installer", "Installer\Installer.csproj", "{598713BC-A622-44AB-AB01-778B9E941DFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C566CA5A-0B68-4F76-A980-8BC0FE701491}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C566CA5A-0B68-4F76-A980-8BC0FE701491}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C566CA5A-0B68-4F76-A980-8BC0FE701491}.Release|Any CPU.Build.0 = Release|Any CPU
+		{598713BC-A622-44AB-AB01-778B9E941DFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{598713BC-A622-44AB-AB01-778B9E941DFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{598713BC-A622-44AB-AB01-778B9E941DFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{598713BC-A622-44AB-AB01-778B9E941DFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
