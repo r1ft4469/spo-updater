@@ -115,9 +115,9 @@ goto :EOF
 
 :DOWNLOAD
 mkdir .\git\patch > nul 2>&1
-.\git\mingw64\bin\curl.exe -LJ -o .\git\patch\patch.dat.001 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/patch.dat.001 > nul 2>&1
-.\git\mingw64\bin\curl.exe -LJ -o .\git\patch\patch.dat.002 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/patch.dat.002 > nul 2>&1
-.\git\mingw64\bin\curl.exe -LJ -o .\git\patch\patch.dat.003 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/patch.dat.003 > nul 2>&1
+.\git\mingw64\bin\curl.exe -LJ --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 -o .\git\patch\patch.dat.001 https://anonfiles.com/Pe70O1k3yb/patch.dat_001 > nul 2>&1
+.\git\mingw64\bin\curl.exe -LJ --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 -o .\git\patch\patch.dat.002 https://anonfiles.com/Tf7fOfk6y9/patch.dat_002 > nul 2>&1
+.\git\mingw64\bin\curl.exe -LJ --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 -o .\git\patch\patch.dat.003 https://anonfiles.com/D97dO1k4y2/patch.dat_003 > nul 2>&1
 .\git\bin\7za.exe x -ogit\patch .\git\patch\patch.dat.001 > nul 2>&1
 del .\git\patch\patch.dat.001 > nul 2>&1
 del .\git\patch\patch.dat.002 > nul 2>&1
