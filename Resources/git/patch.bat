@@ -1,5 +1,5 @@
 @echo off
-del /F /Q .\git\install
+del /F /Q .\git\install > nul 2>&1
 powershell write-host -fore Blue "SPO Setup ..."
 powershell write-host -fore Blue "-----------------------------------------"
 taskkill /F /IM Aki.Launcher.exe > nul 2>&1
@@ -123,7 +123,8 @@ powershell write-host -fore DarkYellow "Downloading Patcher [2:3] ..."
 .\git\mingw64\bin\curl.exe -LJ --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 -o .\git\patch\patch.dat.002 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/patch.dat.002
 powershell write-host -fore DarkYellow "Downloading Patcher [3:3] ..."
 .\git\mingw64\bin\curl.exe -LJ --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 -o .\git\patch\patch.dat.003 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/patch.dat.003
-.\git\bin\7za.exe x -ogit\patch .\git\patch\patch.dat.001 > nul 2>&1
+powershell write-host -fore DarkYellow "Extracting Patcher ..."
+.\git\bin\7za.exe x -y -bso0 -ogit\patch .\git\patch\patch.dat.001
 del .\git\patch\patch.dat.001 > nul 2>&1
 del .\git\patch\patch.dat.002 > nul 2>&1
 del .\git\patch\patch.dat.003 > nul 2>&1
