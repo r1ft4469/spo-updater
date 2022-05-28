@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.IO.Compression;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace Installer
 {
@@ -113,10 +114,44 @@ namespace Installer
         private static void DownloadLauncher(DirectoryInfo target)
         {
             Console.WriteLine($"Downloading Launcher ...");
-            string url = "https://github.com/r1ft4469/spo-updater/releases/download/Beta11/Install.zip";
-            string savePath = target.FullName + "\\Install.zip";
-            WebClient client = new WebClient();
-            client.DownloadFile(url, savePath);
+            bool downloaded = false;
+            int retries = 0;
+            int maxRetries = 5;
+            while (!downloaded && retries < maxRetries)
+            {
+                try
+                {
+                    string url = "https://github.com/r1ft4469/spo-updater/releases/download/Beta12/Install.zip";
+                    string savePath = target.FullName + "\\Install.zip";
+                    WebClient client = new WebClient();
+                    client.DownloadFile(url, savePath);
+                    downloaded = true;
+                }
+                catch (Exception ex)
+                {
+                    retries++;
+                }
+            }
+
+
+            if (!downloaded)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("[Error] Could not Download the Launcher");
+                Console.WriteLine("[Error] Are You Connected to the Internet?");
+                Console.ReadKey();
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("Cleaning up Broken Install ...");
+                foreach (FileInfo file in target.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in target.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+                Application.Exit();
+            }
         }
 
         private static void ExtractLauncher(DirectoryInfo target)
