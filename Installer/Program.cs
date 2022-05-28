@@ -160,7 +160,7 @@ namespace Installer
             string zipPath = target.FullName + "\\Install.zip";
             string extractPath = target.FullName;
 
-            ZipFile.ExtractToDirectory(zipPath, extractPath);
+            ZipFile.ExtractToDirectory(zipPath, extractPath, true);
 
             File.Delete(zipPath);
         }

@@ -9,7 +9,8 @@ call :CLEAN
 powershell write-host -fore DarkYellow "Getting Newest Version of SPO ..."
 git\cmd\git.exe clone --recursive https://github.com/kobrakon/SPO_DEV.git update > nul 2>&1
 IF EXIST "git\update.dat" (
-    .\git\mingw64\bin\curl.exe -LJ --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 -o .\git\update.dat.new https://raw.githubusercontent.com/r1ft4469/spo-updater/update/update.dat > nul 2>&1
+    powershell write-host -fore DarkYellow "Checking Launcher for Newest Version ..."
+    .\git\mingw64\bin\curl.exe -LJ --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 -o .\git\update.dat.new https://raw.githubusercontent.com/r1ft4469/spo-updater/update/update.dat
     fc /B .\git\update.dat .\git\update.dat.new > nul > nul 2>&1
     IF errorlevel 0 (
        del /Q update\update.dat.new > nul 2>&1
@@ -17,7 +18,8 @@ IF EXIST "git\update.dat" (
         xcopy /Y /E .\git\update.dat.new .\git\update.dat* > nul 2>&1
     )
 ) else (
-    .\git\mingw64\bin\curl.exe -O --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/update.dat > nul 2>&1
+    powershell write-host -fore DarkYellow "Downloading Launcher ..."
+    .\git\mingw64\bin\curl.exe -O --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/update.dat
 )
 powershell write-host -fore DarkYellow "Installing SPO ..."
 xcopy /Y /E .\update\user\mods\r1ft-DynamicTimeCycle\r1ft.DynamicTimeCyle.dll .\update\BepInEx\plugins\r1ft.DynamicTimeCyle.dll* > nul 2>&1
