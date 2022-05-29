@@ -16,38 +16,38 @@ FOR /F "USEBACKQ" %%F IN (`powershell -NoLogo -NoProfile -Command ^(Get-Item "Es
 powershell write-host -fore DarkYellow "Downloading Downgrade Patch %fileVersion% ..."
 IF "%fileVersion%"=="0.12.12.18103" (
     call :DOWNLOAD
-    xcopy /Y /E git\\patch\\12.12.18103\\. > nul 2>&1
+    xcopy /Y /E git\\patch\\12.12.18103\\. .\ > nul 2>&1
     call :DOWNGRADE
     goto :EOF
 )
 IF "%fileVersion%"=="0.12.12.17975" (
     call :DOWNLOAD
-    xcopy /Y /E git\\patch\\12.12.17975\\. > nul 2>&1
+    xcopy /Y /E git\\patch\\12.12.17975\\. .\ > nul 2>&1
     call :DOWNGRADE
     goto :EOF
 )
 IF "%fileVersion%"=="0.12.12.17861" (
     call :DOWNLOAD
-    xcopy /Y /E git\\patch\\12.12.17681\\. > nul 2>&1
+    xcopy /Y /E git\\patch\\12.12.17681\\. .\ > nul 2>&1
     call :DOWNGRADE
     goto :EOF
 )
 IF "%fileVersion%"=="0.12.12.17686" (
     call :DOWNLOAD
     echo Installing Downgrade Patch 17686 ...
-    xcopy /Y /E git\\patch\\12.12.17686\\. > nul 2>&1
+    xcopy /Y /E git\\patch\\12.12.17686\\. .\ > nul 2>&1
     call :DOWNGRADE
     goto :EOF
 )
 IF "%fileVersion%"=="0.12.12.17639" (
     call :DOWNLOAD
-    xcopy /Y /E git\\patch\\12.12.17639\\. > nul 2>&1
+    xcopy /Y /E git\\patch\\12.12.17639\\. .\ > nul 2>&1
     call :DOWNGRADE
     goto :EOF
 )
 IF "%fileVersion%"=="0.12.12.17566" (
     call :DOWNLOAD
-    xcopy /Y /E git\\patch\\12.12.17566\\. > nul 2>&1
+    xcopy /Y /E git\\patch\\12.12.17566\\. .\ > nul 2>&1
     call :DOWNGRADE
     goto :EOF
 )
@@ -123,6 +123,9 @@ start "" "Aki.Launcher.exe"
 goto :EOF
 
 :DOWNLOAD
+if EXIST ".\git\patch" (
+    rmdir /S /Q .\git\patch
+)
 mkdir .\git\patch > nul 2>&1
 powershell write-host -fore DarkYellow "Downloading Patcher [1:3] ..."
 .\git\mingw64\bin\curl.exe -LJ --connect-timeout 5 --max-time 100 --retry 5 --retry-delay 0 --retry-max-time 40 -o .\git\patch\patch.dat.001 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/patch.dat.001
