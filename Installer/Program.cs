@@ -37,10 +37,12 @@ namespace Installer
                             Console.WriteLine($"Insalling SPO to : {installLoc}");
                             var inputDir = new DirectoryInfo(EFTLoc);
                             var outputDir = new DirectoryInfo(installLoc);
-                            CopyFolder(inputDir, outputDir);
-                            DownloadLauncher(outputDir);
-                            ExtractLauncher(outputDir);
-                            RunLauncher(outputDir);
+                            if (DownloadLauncher(outputDir))
+                            {
+                                CopyFolder(inputDir, outputDir);
+                                ExtractLauncher(outputDir);
+                                RunLauncher(outputDir);
+                            }
                         }
                     }
                     else
@@ -111,7 +113,7 @@ namespace Installer
             Console.WriteLine($"Starting Launcher ...");
         }
 
-        private static void DownloadLauncher(DirectoryInfo target)
+        private static bool DownloadLauncher(DirectoryInfo target)
         {
             Console.WriteLine($"Downloading Launcher ...");
             bool downloaded = false;
@@ -141,16 +143,26 @@ namespace Installer
                 Console.WriteLine("[Error] Are You Connected to the Internet?");
                 Console.ReadKey();
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("Cleaning up Broken Install ...");
-                foreach (FileInfo file in target.GetFiles())
-                {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in target.GetDirectories())
-                {
-                    dir.Delete(true);
-                }
-                Application.Exit();
+                CleanInstall(target);
+                return false;
+            }
+
+            return true;
+        }
+
+        private static void CleanInstall(DirectoryInfo target)
+        {
+            Console.WriteLine("Cleaning up Broken Install ...");
+            foreach (FileInfo file in target.GetFiles())
+            {
+                file.Delete();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"\r    *    {file.Name}");
+                Console.ForegroundColor = ConsoleColor.Blue;
+            }
+            foreach (DirectoryInfo dir in target.GetDirectories())
+            {
+                dir.Delete(true);
             }
         }
 

@@ -6,9 +6,9 @@ taskkill /F /IM Server.exe > nul 2>&1
 mkdir .\git\aki > nul 2>&1
 powershell write-host -fore DarkYellow "Getting AKI File Checks ..."
 powershell write-host -fore DarkYellow "Downloading AKI [1:2] ..."
-.\git\mingw64\bin\curl.exe -LJO --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/aki.dat.001
+.\git\mingw64\bin\curl.exe -LJO --connect-timeout 5 --max-time 100 --retry 5 --retry-delay 0 --retry-max-time 40 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/aki.dat.001
 powershell write-host -fore DarkYellow "Downloading AKI [2:2] ..."
-.\git\mingw64\bin\curl.exe -LJO --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 40 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/aki.dat.002
+.\git\mingw64\bin\curl.exe -LJO --connect-timeout 5 --max-time 100 --retry 5 --retry-delay 0 --retry-max-time 40 https://raw.githubusercontent.com/r1ft4469/spo-updater/update/aki.dat.002
 move .\aki.dat.001 .\git\aki\aki.dat.001 > nul 2>&1
 move .\aki.dat.002 .\git\aki\aki.dat.002 > nul 2>&1
 powershell write-host -fore DarkYellow "Verifying AKI ..."
