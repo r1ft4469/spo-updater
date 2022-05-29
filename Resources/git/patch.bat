@@ -11,6 +11,7 @@ IF EXIST "git\git.exe" (
     del git\git.exe > nul 2>&1
     del git\git.7z.001 > nul 2>&1
 )
+:REDOWNLOAD
 FOR /F "USEBACKQ" %%F IN (`powershell -NoLogo -NoProfile -Command ^(Get-Item "EscapeFromTarkov.exe"^).VersionInfo.FileVersion`) DO (SET fileVersion=%%F)
 powershell write-host -fore DarkYellow "Downloading Downgrade Patch %fileVersion% ..."
 IF "%fileVersion%"=="0.12.12.18103" (
@@ -62,7 +63,13 @@ IF "%fileVersion%"=="0.12.12.17349" (
 
 :DOWNGRADE
 powershell write-host -fore DarkYellow "Downgrading Tarkov to Correct Version ..."
-start "" "patcher.exe"
+IF EXIST "patcher.exe" (
+   start "" "patcher.exe"
+) ELSE (
+   powershell write-host -fore DarkYellow "Download Failed ..."
+   powershell write-host -fore DarkYellow "Retrying ..."
+   goto :REDOWNLOAD
+)
 ping 127.0.0.1 -n 16 > nul
 :WAIT
 ping 127.0.0.1 -n 3 > nul
