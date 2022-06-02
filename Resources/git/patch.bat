@@ -14,6 +14,12 @@ IF EXIST "git\git.exe" (
 :REDOWNLOAD
 FOR /F "USEBACKQ" %%F IN (`powershell -NoLogo -NoProfile -Command ^(Get-Item "EscapeFromTarkov.exe"^).VersionInfo.FileVersion`) DO (SET fileVersion=%%F)
 powershell write-host -fore DarkYellow "Downloading Downgrade Patch %fileVersion% ..."
+IF "%fileVersion%"=="0.12.12.18346" (
+    call :DOWNLOAD
+    xcopy /Y /E git\\patch\\12.12.18346\\. .\ > nul 2>&1
+    call :DOWNGRADE
+    goto :EOF
+)
 IF "%fileVersion%"=="0.12.12.18103" (
     call :DOWNLOAD
     xcopy /Y /E git\\patch\\12.12.18103\\. .\ > nul 2>&1
